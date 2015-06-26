@@ -1,4 +1,5 @@
 *.un~
 *.swp
 __pycache__
-.DS_Strore
+.DS_Store
+.ipynb_checkpoints
