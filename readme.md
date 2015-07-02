@@ -1,4 +1,4 @@
-# SciPy 2015 Jupyter dvance tutorial material
+# SciPy 2015 Jupyter advanced tutorial material
 
 This tutorial will be separated in 3 parts.
 
@@ -18,4 +18,3 @@ and how the different tooling to install jupyterhub fit into the deployments of
 custom extensions and widgets in a multi-user environment. Jupyter-hub is also
 working on a number of extension that allow custom authentication, and server
 spawning that we will discuss.
-
