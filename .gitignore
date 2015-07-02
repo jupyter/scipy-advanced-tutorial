@@ -1,0 +1,4 @@
+*.un~
+*.swp
+__pycache__
+.DS_Strore
