@@ -12,7 +12,7 @@ define(['services/config'
        ],
 function(configmod) {
   ...
-}
+});
 ```
 
 There are two classes in this module:
