@@ -1,0 +1,31 @@
+#notebook-container {  
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+body.notebook_app {
+    background-color: white;
+}
+
+.rendered_html code,
+.rendered_html pre {
+    background-color: #eaeaea;
+}
+
+.rendered_html code {
+    padding: 1px;
+}
+
+.rendered_html pre {
+    padding: 5px;
+}
+
+.rendered_html table,
+.rendered_html table tr {
+    border: none;
+}
+
+.rendered_html table th,
+.rendered_html table td {
+    border: 1px solid #d0d0d0;
+}
