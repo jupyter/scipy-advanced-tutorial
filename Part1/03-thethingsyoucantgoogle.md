@@ -1,23 +1,19 @@
 # The things you can't Google
 
-There are inherently some things that are hard to Google.
+There are some things that are inherently hard to Google.
 Let's takes for example `html5 website` (I want https://html5.org/). Google have difficulties understanding. You might encounter a few of these during web development.
 
 ![cannotknow](cannotknot.jpg)
 
+## jQuery (aka `$`)
 
-# jQuery (aka `$`)
+In Javascript, `$` is a valid identifier. By convention, a widely used Javascript library known as [`jQuery`](jquery.org) injects itself into the global namespace as `$`. (But beware! `$` can also be a browser native interface that looks and behave almost like jQuery, but only in the console.)
 
-In Javascript `$` is a valid identifier. By convention, q widely use Javascript library known a [`jQuery`](jquery.org) inject itself in global namespace as `$`. Unless when it's not. In which case `$` might be browser native interface that looks and behave almost like jQuery, but only in console.
+jQuery is a library to do a lot of important but not really related things. Code written with it is much more concise, but often not very clear. It's not great, but it's almost indispensable, and a lot of Javascript uses it.
 
-If you could wrote jQuery as a python package, it is would be the following.
+You will often see jQuery used like `$('...')`. If the string part looks like an HTML tag (`$('<div>')`), it's making a new element. If it looks like a CSS selector, it's selecting existing tags. This can give you some short and readable syntax like `$('.cell:odd').remove()` instead of:
 
-A callable module, that behave sometime as a class constructor, and have static methods that are getters and setters (with same name, depending on the number of parameter). It also execute code at startup, add some importhook mechanisme and probably rewrite the Ast.
-[Q](https://pypi.python.org/pypi/q) is probably the kind of things that get closes to that. It is aweful, but we have not done better, and you can't live without.
-
-Anyway, you will see different construct: `$(...)`, and `$.something`. The first is a convenient wrapper around DOM (or collection of DOM) elements. It allow you to get some short and readable syntax like `$('.cell:odd').remove()` instead of:
-
-```
+```javascript
 var elts = document.getElementsByClassName('cell');
 var to_remove = [];
 for(var i in elts){
@@ -27,56 +23,73 @@ for(var i in elts){
 }
 
 ...
-
 ```
 
-Try think of `$(...)` as objects with superpowers.
-
-
-`$.` are just generally utilities function.
+`$.something` are generally utility functions.
 
 
 ## This or that ?
 
 In Javascript you will often find the following construct :
 
-```
+```javascript
 var that = this;
 ```
 
-This, or shouls I say that, is often confusing for the newcomer, especially if he or she comes from a Python background. The reason is simple, the parallel is easy between `self` and `this`. Though, as Javascript is prototype base and does not really have the notion of object like python, `this` does often not refer to what the experience Pythonista think is current object.
+This, or should I say that, is often confusing for the newcomer, especially if he or she comes from a Python background. `this` looks alluringly similar to `self`, but it doesn't always refer to what the experience Pythonista might expect.
 
-In Javascript, there is no reall difference between objects, and function. When the programmer mimic the class inheritance and believe that he is actually creating method on a class, for which `this` will refer to the current object he is mistaking. The keyword `this` alway refer to the current context the object is in, which by default is the **current function**.
+In Javascript, there is no real difference between objects and functions. When the programmer creates what looks like a class and methods, that's not how Javascript sees it. The keyword `this` always refer to the current context the object is in, which by default is the **current function**.
 
-Let's take for example the following piece of code, that coudl be thought as the `execute` method of a cell :
+Let's take for example the following piece of code, that could be thought of as the `execute` method of a cell:
 
-```javascript`
-
+```javascript
 Cell.prototype.execute = function(){
   this.kernel.execute(this.code)  // this refer to a Cell object.
 }
 ```
 
-Let one want to delay the execution, one is tempted to write:
+To delay the execution, one is tempted to write:
 
 
-```javascript`
-
+```javascript
 Cell.prototype.execute = function(delay){
   var do_ex = function(){
     this.kernel.execute(this.code)  // this refer to `do_ex` object.
-  }
+  };
 
   setTimeout(do_ex, delay);
 }
 ```
 
-As the comment point out, `this` do refer to the current function. The way around that is to use a closure around `that`, hence the `var that = this`.
-A seond similar construct one could find, is the use of `$.proxy`, that will set the context (value of `this` of a callback). It is a bout the same as using a close except for the fact that `$.proxy` can be use on function you did not construct, or for which you cannot create a closure around the context you like.
+As the comment point out, `this` do refer to the current function. The way around that is to use a closure around `that`:
+
+```javascript
+Cell.prototype.execute = function(delay){
+  var that = this;
+  var do_ex = function(){
+    that.kernel.execute(that.code)  // *that* is still the Cell object
+  };
+
+  setTimeout(do_ex, delay);
+}
+```
+
+Another way to achieve the same thing is to use `$.proxy`, that will set the context (value of `this` of a callback). It is about the same as using a closure, but `$.proxy` can be used on a function you did not construct, or for which you cannot create a closure around the context you like.
+
+```javascript
+Cell.prototype.execute = function(delay){
+  var do_ex = $.proxy(function(){
+    this.kernel.execute(this.code)  // now this will be the Cell object
+  }, this);
+
+  setTimeout(do_ex, delay);
+}
+```
+
 
 ## Underscore (aka `_`),
 
-One of the beauty of javascript is it'a ability to use ungoogleable names that have ambiguous meaning. This is one of the reason you find `.js` or `js` suffixes in javascript to lift he ambiguity. Though it is not always the case. In particular you will find a few modules that have the good habit of being bound (or bing themselves ) to `_`. Thus you might see things like `_.map`, `_.proxy`,`_.filter`, ...
+One of the beauty of javascript is its ability to use un-googleable names that have ambiguous meaning. This is one of the reason you find `.js` or `js` suffixes in javascript to reduce the ambiguity. Though it is not always the case. In particular you will find a few modules that have the good habit of being bound (or bind themselves) to `_`. Thus you might see things like `_.map`, `_.proxy`,`_.filter`, ...
 
 Most of the time the library bound to `_` is called "Underscore", but still rarely name "Underscore.js". It provides a few utilities function.
 

@@ -1,30 +1,28 @@
 # Notebook extensions
 
-Notebook extensions, or plugins allow end user to highly control the behavior and the appeareance of the Notebook application.
+Notebook extensions allow users to control the behavior of the Notebook and add functionality.
 
-Extensions capability can highly vary from beeing able to load notebook files from [Google Drive](https://github.com/jupyter/jupyter-drive), or PostGresSql server, Presenting Notebook in the form of Slideshow, or by just adding a convenient button or keyboard shortcut for an action the user is often doing.
+Extensions capabilities can range from loading notebook files from [Google Drive](https://github.com/jupyter/jupyter-drive), or PostgreSQL server, presenting notebooks in the form of a slideshow, to adding a convenient button or keyboard shortcut for an action the user does often.
 
 The way we write Jupyter/IPython is to provide the minimal sensible default, with easy access to configuration for extension to modify behavior.
 
+Extensions can be composed of many pieces, but you will mostly find a Javascript part that live on the frontend side (ie, the Browser, written in Javascript), and a part that live on the server side (written in Python). For now, we will focus on the Javascript side.
 
-Extensions can be composed of many pieces, but you will mostly find a Javascript part that live on the frontend side (ie, the Browser, written in Javascript), and a part that live on the server side (written in Python). We will, in a first time mostly focus on the Javascript side.
-
-A large number of repo exist here and there o nthe internet, and we haven't taken the time to write a Jupyter Store (yet), to make extension easily installable. Well I suppose this can be done as an extension, and your research on the web will probably show that it can be done, but we will still focus on the old manual way of installing extension to learn how things works, because that's why you are here right ?
+There are a number of repos here and there on the internet, and we haven't taken the time to write a Jupyter Store (yet), to make extension easily installable. Well I suppose this can be done as an extension, and your research on the web will probably show that it can be done, but we will still focus on the old manual way of installing extension to learn how things works, because that's why you are here.
 
 Ok, so here are link to some active repos, with extensions:
 
- - https://github.com/ipython-contrib/IPython-notebook-extensions – check out the rigth branch dependsing on your version of IPython. If you are using IPython 3.x you most likely want extension from the 3.x branch.
- - https://bitbucket.org/ipre/calico/ look in the notebook/nbextesion folder.
+ - https://github.com/ipython-contrib/IPython-notebook-extensions – check out the right branch for your version of IPython. If you are using IPython 3.x, you want extensions from the 3.x branch.
+ - https://bitbucket.org/ipre/calico/ look in the `notebook/nbextension` folder.
 
+Ok, let's go. I've made a minimal extension for you in `extensions` next to this file. Link or copy it over into:
 
-Ok, let's go. I've made a minimal extension for you in extensions, link or move it over into:
-
-```bash
+```shell
 $ ls ~/.ipython/nbextensions/
 hello-scipy.js
 ```
 
-Ok, so now let's open a notebook and configure it to load the extension automatically.
+Now let's open a notebook and configure it to load the extension automatically.
 In a new notebook, or the one I provides with a reminder of the instructions, open the developer console
 and enter the following:
 
@@ -35,13 +33,13 @@ IPython.notebook.config.update({
 })
 ```
 
-Now Reload your page, and observe the Javascript console, it should tell you what to do next !
+Now Reload your page, and look at the Javascript console - it should tell you what to do next!
 
 ## Explanation
 
-Do not be preoccupied with what `IPython.notebook.config.update` is we will see that later.
+Do not be preoccupied with what `IPython.notebook.config.update` is: we will see that later.
 
-The `"load_extensions"` part take a dict with the name of extensions and wether they are loaded
+The `"load_extensions"` part takes a dict with the names of extensions, and whether they are loaded
 or not. It is one of the config value which is now stored on server side.
 
 There is a way to activate extensions from outside the notebook, but we won't see
@@ -74,14 +72,14 @@ We only export a function called `load_ipython_extension` to the outside world:
 `return {load_ipython_extension: _on_load };`. Anything outside of this dict will
 be inaccessible for the rest of the code. You can see that as Python's `__all__`.
 
-Note that you will find legacy extensions on the internet that **do not define**
-`load_ipython_extension` and rely on IPython's Events, and `Custom.js`.
-While it does work for the time being, theses extensions will break in the future
+Note that you will find legacy extensions on the internet that *do not define*
+`load_ipython_extension` and rely on IPython's Events, and `custom.js`.
+While it mostly works for the time being, these extensions will break in the future
 and are subject to race conditions.
 
-While our Javascript API is still highly in motion, and not guarantied stable,
-will try our best to make updating extension that use `load_ipython_extension` easier
-that the ones using Events and `custom.js` !
+While our Javascript API is still highly in motion, and not guaranteed stable,
+will try our best to make updating extensions that use `load_ipython_extension` easier
+that the ones using Events and `custom.js`!
 
 
 ## New keyboard shortcut !
