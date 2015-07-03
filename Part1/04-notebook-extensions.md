@@ -6,11 +6,11 @@ Extensions capabilities can range from loading notebook files from [Google Drive
 
 The way we write Jupyter/IPython is to provide the minimal sensible default, with easy access to configuration for extension to modify behavior.
 
-Extensions can be composed of many pieces, but you will mostly find a Javascript part that live on the frontend side (ie, the Browser, written in Javascript), and a part that live on the server side (written in Python). For now, we will focus on the Javascript side.
+Extensions can be composed of many pieces, but you will mostly find a Javascript part that lives on the frontend side (ie, the Browser), and a part that lives on the server side (written in Python). For now, we will focus on the Javascript side.
 
-There are a number of repos here and there on the internet, and we haven't taken the time to write a Jupyter Store (yet), to make extension easily installable. Well I suppose this can be done as an extension, and your research on the web will probably show that it can be done, but we will still focus on the old manual way of installing extension to learn how things works, because that's why you are here.
+There are a number of repos here and there on the internet, and we haven't taken the time to write a Jupyter Store (yet), to make extensions easily installable. Well, I suppose this could be done as an extension, and your research on the web will probably show that it can be done, but we will still focus on the old manual way of installing extension to learn how things works, because that's why you are here.
 
-Ok, so here are link to some active repos, with extensions:
+Ok, so here are links to some active repos, with extensions:
 
  - https://github.com/ipython-contrib/IPython-notebook-extensions – check out the right branch for your version of IPython. If you are using IPython 3.x, you want extensions from the 3.x branch.
  - https://bitbucket.org/ipre/calico/ look in the `notebook/nbextension` folder.
@@ -58,9 +58,9 @@ define(function(){
 })
 ```
 
-The define call: `define(function(){` suggest we have no dependencies,
+The define call: `define(function(){` suggests that we have no dependencies,
 
-For readability we define a function that will be called on notebook load at the right time.
+For readability, we define a function that will be called on notebook load at the right time.
 We keep python convention that `_xxx` is private.
 ```js
   function _on_load(){
@@ -73,13 +73,13 @@ We only export a function called `load_ipython_extension` to the outside world:
 be inaccessible for the rest of the code. You can see that as Python's `__all__`.
 
 Note that you will find legacy extensions on the internet that *do not define*
-`load_ipython_extension` and rely on IPython's Events, and `custom.js`.
+`load_ipython_extension` and rely on IPython's events, and `custom.js`.
 While it mostly works for the time being, these extensions will break in the future
 and are subject to race conditions.
 
 While our Javascript API is still highly in motion, and not guaranteed stable,
-will try our best to make updating extensions that use `load_ipython_extension` easier
-that the ones using Events and `custom.js`!
+we'll try our best to make updating extensions that use `load_ipython_extension` easier
+that the ones using events and `custom.js`!
 
 
 ## New keyboard shortcut !
