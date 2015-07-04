@@ -79,3 +79,24 @@ foo_config.set('visible', false);
 
 This is also asynchronous: it sends the new value off, but doesn't wait for a
 reply.
+
+## Examples
+
+The notebook itself uses this confuguration system. Remember that to enable
+our extension, we did this:
+
+```javascript
+IPython.notebook.config.update({
+  "load_extensions": {"hello-scipy":true}
+})
+```
+
+`IPython.notebook.config` is a `ConfigSection` object. It stores a dictionary
+of extensions to enable. When you open a notebook, it loads that config, and
+loads the extensions specified.
+
+Storing these as a dictionary (unordered) makes it simpler to add and remove
+extensions from the set (`.update()` does a recursive dictionary update).
+
+[cite2c](https://github.com/takluyver/cite2c) also uses this config system to
+store user data.
