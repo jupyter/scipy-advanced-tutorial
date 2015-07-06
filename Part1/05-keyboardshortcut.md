@@ -11,7 +11,7 @@ A shortcut is a string that represents a sequence of several key presses. Commas
 For example `a,b,c,d` represent the succession of pressing the letters A, B, C and D without modifier.
 `Shift-a,b,c,d` will have only the  `A` key pressed with shift modifier, and `Shift-a,Shift-b,Shift-c,Shift-d` represents holding shift and pressing `a,b,c,d` in order.
 
-Bind some existing actions in command mode, using the javascript console (where `>` and `<` are in and out prompt):
+We can bind some existing actions in command mode, using the javascript console (where `>` and `<` are in and out prompt):
 
 
 ```javascript
@@ -22,7 +22,7 @@ Bind some existing actions in command mode, using the javascript console (where 
 < undefined
 ```
 
-To see the list of available actions, you can issue the following in the developper console:
+To see the list of available actions, you can issue the following in the developer console:
 
 ```javascript
 > $.map(
@@ -40,6 +40,7 @@ To see the list of available actions, you can issue the following in the develop
 "ipython.save-notebook"]
 ```
 
+> Tip: Use `Alt-Enter` for entering multiline text on Chrome.
 
 ## Actions
 
@@ -73,18 +74,20 @@ should probably understand how to use this.
 
 ### Defining an action
 
-// icons are taken from font-awesome.
-// names should not contain spaces.
+Le's see how to define an action. You can pick and icon from [the Font Awesome website](http://fortawesome.github.io/Font-Awesome/icons/). Try to avoid also action name to have space.
+
+We will use the following API to register an action:
 
 ```javascript
 IPython.keyboard_manager.actions.register
 ```
 
-Choose icons from [Font Awesome](http://fortawesome.github.io/Font-Awesome/icons/)
+Let's define an action that clear call cells
+output and restart the kernel.
 
 ```javascript
-var clear_all_cell_restart = {
-    help: 'Clear all cell and restart kernel without confirmations',
+var clear_all_cells_restart = {
+    help: 'Clear all cells and restart kernel without confirmations',
     icon : 'fa-recycle',
     help_index : '',
     handler : function (env) {
@@ -95,6 +98,11 @@ var clear_all_cell_restart = {
     }
 }
 ```
+
+And now we can register it. The first argument of the `register` function is the action itself,
+the second one is the name for the action, and the third one is a namespace prefix (we will use scipy-2015).
+
+The register function return an id that refer to this action.
 
 ```javascript
 IPython.keyboard_manager.actions.register(clear_all_cell_restart, 'clear-all-cells-restart', 'scipy-2015')
