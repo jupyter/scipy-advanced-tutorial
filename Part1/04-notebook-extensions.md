@@ -23,7 +23,7 @@ $ ls ~/.ipython/nbextensions/
 hello-scipy.js
 ```
 
-> Tip: ~/.ipython` is the per-user config, there are system wide install location,
+> Tip: `~/.ipython` is the per-user config, there are system wide install location,
 and in 4.0 some of these folders will be `jupyter` instead of `ipython`.
 
 
