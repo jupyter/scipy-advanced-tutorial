@@ -23,7 +23,7 @@ $ ls ~/.ipython/nbextensions/
 hello-scipy.js
 ```
 
-> Tip: ~/.ipython` is the per-user config, there are system wide install location,
+> Tip: `~/.ipython` is the per-user config, there are system wide install location,
 and in 4.0 some of these folders will be `jupyter` instead of `ipython`.
 
 
@@ -53,7 +53,7 @@ that for now.
 ### The extension
 
 ```js
-define(function(){
+define([], function(){
 
     function _on_load(){
           console.info('Hello SciPy 2015')
@@ -69,8 +69,8 @@ For readability, we define a function that will be called on notebook load at th
 We keep python convention that `_xxx` is private.
 ```js
   function _on_load(){
-        console.info('Hello SciPy 2015')
-  }
+    console.info('Hello SciPy 2015')
+}
 ```
 
 We only export a function called `load_ipython_extension` to the outside world:
@@ -100,7 +100,7 @@ Change the first line to the following
 
 
 ```js
-define(['base/js/namespace'],function(IPython){
+define(['base/js/namespace'], function(IPython){
 ```
 
 I remind you that this is basically equivalent to :
@@ -116,7 +116,7 @@ machine with your current workload. Though it might break in some cases.
 Using `define([...])` insure in the dependency graph that the right file is loaded,
 and that the local name will be `IPython` (hint, in next release the global name might be `Jupyter`).
 
-Ok, now let's make a detour and [Keyboard Shortcut](./keyboardshortcut.md).
+Ok, now let's make a detour and [Keyboard Shortcut](./05-keyboardshortcut.md).
 
 A few things you might need :
 
