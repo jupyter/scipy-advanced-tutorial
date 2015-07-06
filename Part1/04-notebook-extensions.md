@@ -17,10 +17,15 @@ Ok, so here are links to some active repos, with extensions:
 
 Ok, let's go. I've made a minimal extension for you in `extensions` next to this file. Link or copy it over into:
 
+
 ```shell
 $ ls ~/.ipython/nbextensions/
 hello-scipy.js
 ```
+
+> Tip: ~/.ipython` is the per-user config, there are system wide install location,
+and in 4.0 some of these folders will be `jupyter` instead of `ipython`.
+
 
 Now let's open a notebook and configure it to load the extension automatically.
 In a new notebook, or the one I provides with a reminder of the instructions, open the developer console
