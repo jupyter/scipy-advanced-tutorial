@@ -95,9 +95,93 @@ Most of the time the library bound to `_` is called "Underscore", but still rare
 
 ## use strict
 
+Javascript uses the keyword `var` to declare variable.  One of the gotchas, is that if you do not use `var` you will implicitely refer to a variable in the global namespace (which in browser is the `window` object).To prevent that at the top of your module scope, use the string `"use strint"`, in quote. This will make your browser less tolerant to the above issues (and a few other), which will save you from Headhache.
+
+```javascript
+define([..., reauirements], function(a,b,c){
+  "use strict";
+})
+```
+
+Top of module scope does not always mean top of file, using `"use strict"` at top of file, might be an issue when working with legacy code.
+
+
 ## unlimited argument, default to undefined
 
+One things to ba aware of is that javascript will never complain if you pass to many of too few arguments to a function.
+
+Thus you probably want to check argumets for undefined. This can be helpful though for default values.
+
+```
+> var say_hi = function(name){ console.log('Hi', name || 'unamed person')}
+undefined
+> say_hi()
+Hi unamed person
+> say_hi('Matthias')
+Hi Matthias
+
+```
+
+## ==, ===
+
+Javascript test for equality is done with triple equal, not double equal,
+double equal will try to cast both memebers before doing a "smart" comparison,
+leading to sometime unexpected behavior:
+
+
+```javascript
+> '0' == 0
+true
+> 0 == ''
+true
+> '' == '0'
+false
+```
+
 ## require
+
+Javascript do not have a nice concept of import have we have in Python when you
+are working in browser. In particular because file loading nned to be asyncronous.
+
+One of the way to go around that is to use Asynchromous Module Definition (aka
+  AMD),and we often do that with a lib call  `require` or `requirejs`.
+To use requirejs you need to know that 2 functions. `define` and `require`.
+
+
+```javascript
+define(
+  ['matplotlib/pyplot',
+   'numpy'
+   'IPtython/notebook'], function(
+     pyplot,
+     np,
+     notebook
+     ){
+       "use strict"
+        // your module
+   }
+)
+```
+
+`require` is used in the same way unless you want to run the code that create the
+module as soon as possible. Rule of thumb: use `define` unless you cannot.
+
+In **some** cases, you can though use a simple syntax:
+
+```javascript
+define(function(){
+  "use strict";
+  var numpy = require('numpy')  
+  var pyplot = require('matplotlib.pyplot')
+  var np = require('numpy')
+
+  //... your module
+})
+```
+
+Which is easier to read, but only works if the module you refer to has already been imported.
+It also allow you to get handle to modules in the REPL.
+
 
 ## IIFE
 
@@ -106,7 +190,7 @@ You might find the following Here and there. These are Immediately Invoked Funct
  - At module/file level
  - In loops.
 
-```
+```javascript
 X = (function(A){
   // do stuff
   // loosely
@@ -120,7 +204,7 @@ X = (function(A){
 
 These are basically a work around some scoping problem in JS. Imagine that in python:
 
-```
+```javascript
 >>> for i in range(5):
 >>>    print(i)
 5
@@ -131,28 +215,29 @@ These are basically a work around some scoping problem in JS. Imagine that in py
 ```
 
 You could fix that by:
-```
+
+```javascript
 myfun = lambda x:print(x)
 for i in range(5):
     myfun(i)
 ```
 That can be rewritten as
 
-```
+```javascript
 for i in range(5):
     (lambda x:print(x))(i)
 ```
 
 Same in js
 
-```
+```javascript
   //...
   X = do_stuff(A)
 ```
 
 wrap in a function
 
-```
+```javascript
 function(A){
   ...
   return do_stuff(A)
@@ -160,7 +245,7 @@ function(A){
 ```
 Make it an expression
 
-```
+```javascript
 (
 function(A){...}
 )
@@ -168,6 +253,14 @@ function(A){...}
 
 Call with A as parameter, and assign to X
 
-```
+```javascript
 X = (function...)(A)
 ```
+
+## MDN
+
+Last tip, [Mozilla Developper Network](https://developer.mozilla.org/) is your
+friend, (pehabs even more than Google), and have often really **good** docs
+with example on how to use javascript/html/css. To know wether some features can
+be used on your browser you can check
+[Can I use](http://caniuse.com/#search=translate) website.
