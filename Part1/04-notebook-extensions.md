@@ -306,10 +306,10 @@ def load_jupyter_server_extension(nbapp):
 
 Now if we hit the `/scipy/log` url with a PUT request, our `put` method will be
 called with the right data. From the Javascript side you can make a PUT request
-by adapting the followign snippet of code:
+by adapting the following snippet of code:
 
 
-```
+```javascript
 settings = {
     url : '/scipy/log',
     processData : false,
@@ -322,6 +322,6 @@ $.ajax(settings);
 
 Try to use this to log a user input in a dialog.
 
-We won't go much further on how to write server-side handler, this is just python/web programming, and is not really IPython specific.
+We won't go much further on how to write server-side handlers, this is just python/web programming, and is not really IPython specific.
 
 Let's dive a bit more into how to persist user configuration.
