@@ -1,0 +1,9 @@
+
+
+.quickaction-dialog input {
+    width: 100%;
+}
+
+.ui-front {
+    z-index: 1200;
+}
