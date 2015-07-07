@@ -1,13 +1,13 @@
 # The things you can't Google
 
 There are some things that are inherently hard to Google.
-Let's takes for example `html5 website` (I want https://html5.org/). Google have difficulties understanding. You might encounter a few of these during web development.
+Let's takes for example `html5 website` (I want https://html5.org/). Google has difficulty understanding this. You might encounter a few such terms when doing web development.
 
 ![cannotknow](cannotknot.jpg)
 
 ## jQuery (aka `$`)
 
-In Javascript, `$` is a valid identifier. By convention, a widely used Javascript library known as [`jQuery`](jquery.org) injects itself into the global namespace as `$`. (But beware! `$` can also be a browser native interface that looks and behave almost like jQuery, but only in the console.)
+In Javascript, `$` is a valid identifier. By convention, a widely used Javascript library known as [`jQuery`](jquery.org) injects itself into the global namespace as `$`. (But beware! `$` can also be a browser native interface that looks and behaves almost like jQuery, but only in the console.)
 
 jQuery is a library to do a lot of important but not really related things. Code written with it is much more concise, but often not very clear. It's not great, but it's almost indispensable, and a lot of Javascript uses it.
 
@@ -29,9 +29,9 @@ for(var i in elts){
 
 ## Underscore (aka `_`),
 
-One of the beauty of javascript is its ability to use un-googleable names that have ambiguous meaning. This is one of the reason you find `.js` or `js` suffixes in javascript to reduce the ambiguity. Though it is not always the case. In particular you will find a few modules that have the good habit of being bound (or bind themselves) to `_`. Thus you might see things like `_.map`, `_.proxy`,`_.filter`, ...
+One beauty of javascript is its ability to use un-googleable names that have ambiguous meaning. This is one of the reason you find `.js` or `js` suffixes in javascript to reduce the ambiguity. Though it is not always the case. In particular you will find a few modules that have the good habit of being bound (or bind themselves) to `_`. Thus you might see things like `_.map`, `_.proxy`,`_.filter`, ...
 
-Most of the time the library bound to `_` is called "Underscore", but still rarely name "Underscore.js". It provides a few utilities function.
+Most of the time the library bound to `_` is called "Underscore", but still rarely name "Underscore.js". It provides a few utility functions.
 
 ## This or that ?
 
