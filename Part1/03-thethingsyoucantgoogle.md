@@ -103,12 +103,12 @@ To use requirejs you need to know that 2 functions. `define` and `require`.
 
 ```javascript
 define(
-  ['matplotlib/pyplot',
-   'numpy'
-   'IPtython/notebook'], function(
-     pyplot,
-     np,
-     notebook
+  ['base/js/namespace',
+   'moment'
+   'jquery'], function(
+     namespace,
+     mmt,
+     $
      ){
        "use strict"
         // your module
@@ -124,9 +124,9 @@ In **some** cases, you can though use a simple syntax:
 ```javascript
 define(function(){
   "use strict";
-  var numpy = require('numpy')  
-  var pyplot = require('matplotlib.pyplot')
-  var np = require('numpy')
+  var namespace = require('base/js/namespace')  
+  var mmt = require('moment')
+  var $ = require('jquery')
 
   //... your module
 })
