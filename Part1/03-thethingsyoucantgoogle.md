@@ -27,6 +27,11 @@ for(var i in elts){
 
 `$.something` are generally utility functions.
 
+## Underscore (aka `_`),
+
+One of the beauty of javascript is its ability to use un-googleable names that have ambiguous meaning. This is one of the reason you find `.js` or `js` suffixes in javascript to reduce the ambiguity. Though it is not always the case. In particular you will find a few modules that have the good habit of being bound (or bind themselves) to `_`. Thus you might see things like `_.map`, `_.proxy`,`_.filter`, ...
+
+Most of the time the library bound to `_` is called "Underscore", but still rarely name "Underscore.js". It provides a few utilities function.
 
 ## This or that ?
 
@@ -86,14 +91,52 @@ Cell.prototype.execute = function(delay){
 }
 ```
 
+## require
 
-## Underscore (aka `_`),
+Javascript do not have a nice concept of import have we have in Python when you
+are working in browser. In particular because file loading nned to be asyncronous.
 
-One of the beauty of javascript is its ability to use un-googleable names that have ambiguous meaning. This is one of the reason you find `.js` or `js` suffixes in javascript to reduce the ambiguity. Though it is not always the case. In particular you will find a few modules that have the good habit of being bound (or bind themselves) to `_`. Thus you might see things like `_.map`, `_.proxy`,`_.filter`, ...
+One of the way to go around that is to use Asynchromous Module Definition (aka
+  AMD),and we often do that with a lib call  `require` or `requirejs`.
+To use requirejs you need to know that 2 functions. `define` and `require`.
 
-Most of the time the library bound to `_` is called "Underscore", but still rarely name "Underscore.js". It provides a few utilities function.
 
-## use strict
+```javascript
+define(
+  ['matplotlib/pyplot',
+   'numpy'
+   'IPtython/notebook'], function(
+     pyplot,
+     np,
+     notebook
+     ){
+       "use strict"
+        // your module
+   }
+)
+```
+
+`require` is used in the same way unless you want to run the code that create the
+module as soon as possible. Rule of thumb: use `define` unless you cannot.
+
+In **some** cases, you can though use a simple syntax:
+
+```javascript
+define(function(){
+  "use strict";
+  var numpy = require('numpy')  
+  var pyplot = require('matplotlib.pyplot')
+  var np = require('numpy')
+
+  //... your module
+})
+```
+
+Which is easier to read, but only works if the module you refer to has already been imported.
+It also allow you to get handle to modules in the REPL.
+
+
+## "use strict"
 
 Javascript uses the keyword `var` to declare variable.  One of the gotchas, is that if you do not use `var` you will implicitely refer to a variable in the global namespace (which in browser is the `window` object).To prevent that at the top of your module scope, use the string `"use strint"`, in quote. This will make your browser less tolerant to the above issues (and a few other), which will save you from Headhache.
 
@@ -138,49 +181,6 @@ true
 false
 ```
 
-## require
-
-Javascript do not have a nice concept of import have we have in Python when you
-are working in browser. In particular because file loading nned to be asyncronous.
-
-One of the way to go around that is to use Asynchromous Module Definition (aka
-  AMD),and we often do that with a lib call  `require` or `requirejs`.
-To use requirejs you need to know that 2 functions. `define` and `require`.
-
-
-```javascript
-define(
-  ['matplotlib/pyplot',
-   'numpy'
-   'IPtython/notebook'], function(
-     pyplot,
-     np,
-     notebook
-     ){
-       "use strict"
-        // your module
-   }
-)
-```
-
-`require` is used in the same way unless you want to run the code that create the
-module as soon as possible. Rule of thumb: use `define` unless you cannot.
-
-In **some** cases, you can though use a simple syntax:
-
-```javascript
-define(function(){
-  "use strict";
-  var numpy = require('numpy')  
-  var pyplot = require('matplotlib.pyplot')
-  var np = require('numpy')
-
-  //... your module
-})
-```
-
-Which is easier to read, but only works if the module you refer to has already been imported.
-It also allow you to get handle to modules in the REPL.
 
 
 ## IIFE
