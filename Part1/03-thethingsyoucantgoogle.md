@@ -35,13 +35,13 @@ Most of the time the library bound to `_` is called "Underscore", but still rare
 
 ## This or that ?
 
-In Javascript you will often find the following construct :
+In Javascript you will often find the following construct:
 
 ```javascript
 var that = this;
 ```
 
-This, or should I say that, is often confusing for the newcomer, especially if he or she comes from a Python background. `this` looks alluringly similar to `self`, but it doesn't always refer to what the experience Pythonista might expect.
+This, or should I say that, is often confusing for the newcomer, especially if he or she comes from a Python background. `this` looks alluringly similar to `self`, but it doesn't always refer to what the experienced Pythonista might expect.
 
 In Javascript, there is no real difference between objects and functions. When the programmer creates what looks like a class and methods, that's not how Javascript sees it. The keyword `this` always refer to the current context the object is in, which by default is the **current function**.
 
@@ -66,7 +66,7 @@ Cell.prototype.execute = function(delay){
 }
 ```
 
-As the comment point out, `this` do refer to the current function. The way around that is to use a closure around `that`:
+As the comment points out, `this` refers to the current function. The way around that is to use a closure around `that`:
 
 ```javascript
 Cell.prototype.execute = function(delay){
@@ -93,12 +93,10 @@ Cell.prototype.execute = function(delay){
 
 ## require
 
-Javascript do not have a nice concept of import have we have in Python when you
-are working in browser. In particular because file loading nned to be asyncronous.
+Javascript in the browser does not have a nice import system like Python. This is partly because file loading needs to be asynchronous.
 
-One of the way to go around that is to use Asynchromous Module Definition (aka
-  AMD),and we often do that with a lib call  `require` or `requirejs`.
-To use requirejs you need to know that 2 functions. `define` and `require`.
+One way around that is to use Asynchronous Module Definition (aka AMD), and we often do that with a library called `require` or `requirejs`.
+To use requirejs you need to know two functions: `define` and `require`.
 
 
 ```javascript
@@ -133,33 +131,32 @@ define(function(){
 ```
 
 Which is easier to read, but only works if the module you refer to has already been imported.
-It also allow you to get handle to modules in the REPL.
+It also allows you to get handle to modules in the REPL.
 
 
 ## "use strict"
 
-Javascript uses the keyword `var` to declare variable.  One of the gotchas, is that if you do not use `var` you will implicitely refer to a variable in the global namespace (which in browser is the `window` object).To prevent that at the top of your module scope, use the string `"use strint"`, in quote. This will make your browser less tolerant to the above issues (and a few other), which will save you from Headhache.
+Javascript uses the keyword `var` to declare variables. One gotcha is that if you forget `var`, you will implicitly refer to a variable in the global namespace (which in the browser is the `window` object). To prevent that, put the string `"use strict"` in quotes at the top of your module scope. This will make your browser less tolerant of forgetting `var` (and a few other mistakes), which will save you from headaches.
 
 ```javascript
-define([..., reauirements], function(a,b,c){
+define([..., requirements], function(a,b,c){
   "use strict";
 })
 ```
 
-Top of module scope does not always mean top of file, using `"use strict"` at top of file, might be an issue when working with legacy code.
-
+Top of module scope does not always mean top of file - using `"use strict"` at the top of a file might cause issues when working with legacy code.
 
 ## unlimited argument, default to undefined
 
-One things to ba aware of is that javascript will never complain if you pass to many of too few arguments to a function.
+One thing to be aware of is that Javascript will never complain if you pass too many of too few arguments to a function.
 
-Thus you probably want to check argumets for undefined. This can be helpful though for default values.
+Thus you probably want to check arguments for undefined. This can be helpful though for default values.
 
-```
-> var say_hi = function(name){ console.log('Hi', name || 'unamed person')}
+```javascript
+> var say_hi = function(name){ console.log('Hi', name || 'unnamed person')}
 undefined
 > say_hi()
-Hi unamed person
+Hi unnamed person
 > say_hi('Matthias')
 Hi Matthias
 
@@ -167,10 +164,9 @@ Hi Matthias
 
 ## ==, ===
 
-Javascript test for equality is done with triple equal, not double equal,
-double equal will try to cast both memebers before doing a "smart" comparison,
-leading to sometime unexpected behavior:
-
+Javascript test for equality is done with triple equal, not double equal.
+Double equal will try to cast both members before doing a "smart" comparison,
+leading to some unexpected behaviour:
 
 ```javascript
 > '0' == 0
@@ -259,8 +255,10 @@ X = (function...)(A)
 
 ## MDN
 
-Last tip, [Mozilla Developper Network](https://developer.mozilla.org/) is your
-friend, (pehabs even more than Google), and have often really **good** docs
-with example on how to use javascript/html/css. To know wether some features can
-be used on your browser you can check
-[Can I use](http://caniuse.com/#search=translate) website.
+Last tip, [Mozilla Developer Network](https://developer.mozilla.org/) is your
+friend (perhaps even more than Google) and often has really **good** docs
+with examples on how to use javascript/html/css.
+
+To know whether some features can
+be used across browsers, you can check
+[Can I use](http://caniuse.com/#search=translate).
