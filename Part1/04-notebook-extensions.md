@@ -271,4 +271,57 @@ python3 -m IPython  notebook --notebook-dir=~ --NotebookApp.server_extensions="[
 ```
 
 
-Now let's add a handler capable of preating requests:
+Now let's add a handler capable of treating requests.
+As the Notebook is written in Tornado, we need to use tornado way to have
+handlers. We have to subclass `RequestHandler` and define a `initialize` method,
+as well as a methods which name match the request we will be doing (get, put patch)..
+
+
+
+```python
+from IPython.html.utils import url_path_join as ujoin
+from tornado.web import RequestHandler
+
+
+class MyLogHandler(RequestHandler):
+    def initialize(self, log=None):
+        self.log = log
+
+    def put(self):
+        data = self.request.body.decode('utf-8')
+        self.log.info(data)
+        self.finish()
+
+
+def load_jupyter_server_extension(nbapp):
+    nbapp.log.info('SciPy Ext loaded')
+
+    webapp = nbapp.web_app
+    base_url = webapp.settings['base_url']
+    webapp.add_handlers(".*$", [
+        (ujoin(base_url, r"/scipy/log"), MyLogHandler,
+            {'log': nbapp.log}),
+    ])
+```
+
+Now if we hit the `/scipy/log` url with a PUT request, our `put` method will be
+called with the right data. From the Javascript side you can make a PUT request
+by adapting the followign snippet of code:
+
+
+```
+settings = {
+    url : '/scipy/log',
+    processData : false,
+    type : "PUT",
+    dataType: "json",
+    contentType: 'application/json',
+};
+$.ajax(settings);
+```
+
+Try to use this to log a user input in a dialog.
+
+We won't go much further on how to write server-side handler, this is just python/web programming, and is not really IPython specific.
+
+Let's dive a bit more into how to persist user configuration.
